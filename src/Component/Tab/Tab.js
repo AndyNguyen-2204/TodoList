@@ -13,6 +13,7 @@ export default function Tab() {
         }
     ]
     const [show,setShow]=useState(false)
+    const [tab,setTab]=useState(0)
     const handleAddTask = () =>{
         
     }
@@ -20,12 +21,15 @@ export default function Tab() {
     <div className='wrap-divTab'>
         <div className='wrap-tab'>
         {Tab.map((el,index)=>
-            <span key={index}>{el.name}</span>
+            <span onClick={()=>setTab(index)} key={index} className={tab===index?"TabActive":""}>{el.name}</span>
         )}
         </div>
         <div className='wrap-Addtask'>
             <button onClick={handleAddTask} className='btn-addTask'>Add Task</button>
+            <div className='wrap-input-add'>
             <input/>
+            <input/>
+            </div>
         </div>
     </div>
   )

@@ -1,5 +1,7 @@
 // TodoListSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { get } from '../../Axios/baseApi';
+import { toast } from 'react-toastify';
 
 const initialState = {
   data: [],
@@ -7,6 +9,19 @@ const initialState = {
   error: null,
 };
 
+export const getListTodo = createAsyncThunk(
+  'listTodo/getList',
+  async ({ url }) => {
+    try {
+      const response = await get(url); // Thay đổi URL tùy theo API của bạn
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+      return error.response
+
+    }
+  }
+);
 // Tạo action creator bất đồng bộ để thực hiện cuộc gọi API và cập nhật state trong slice
 export const ListTodoSlice = createSlice({
   name: 'ListTodo',
@@ -16,17 +31,16 @@ export const ListTodoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(getListTodo.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.success = null
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(getListTodo.fulfilled, (state, action) => {
         state.loading = false;
-        toast.success("Đăng ký tài khoản thành công!");
         state.success = true
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(getListTodo.rejected, (state, action) => {
         state.loading = false;
         // state.error = action.error.message;
         toast.error(action.error.message);

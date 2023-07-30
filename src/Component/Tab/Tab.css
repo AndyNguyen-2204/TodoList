@@ -6,6 +6,16 @@
     display: flex;
     gap: 15px;
 }
+.wrap-tab span{
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 150%;
+    color:#cbcbcb ;
+    cursor: pointer;
+}
+.wrap-tab span:hover{
+   color: #343e94;
+}
 .btn-addTask{
     padding: 10px;
     border: none;
@@ -13,10 +23,22 @@
     color: white;
     border-radius: 5px;
     max-width: max-content;
+    margin-bottom: 10px;
 
 }
 .wrap-Addtask{
     display: flex;
     flex-direction: column;
     align-items: end;
+}
+.wrap-input-add{
+    display: flex;
+    gap: 10px;
+}
+.wrap-input-add input{
+    padding: 8px;
+    min-width: 200px;
+}
+.TabActive{
+    color: #343e94 !important;   
 }
