@@ -1,6 +1,6 @@
-import { useState,ChangeEvent } from "react";
+import { useState,ChangeEvent, useEffect } from "react";
 import { loginUser, registerUser } from '../../Redux/Login/login';
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import "./Login.css"
 import { useNavigate } from "react-router";
 
@@ -11,8 +11,9 @@ function Login(){
   });
   const dispatch=useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.Login.login);
 
-  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>)=> {
+  const handleChangeInput = (e)=> {
     // Lấy tên trường nhập liệu (username hoặc password)
     const fieldName = e.target.name;
 
@@ -38,6 +39,15 @@ function Login(){
   const handleRegister =()=>{
     navigate("/register")
   }
+   
+  useEffect(()=>{
+    if (isLoggedIn) {
+      return navigate("/home");
+    } else {
+      // Navigate to login page or handle not logged in state
+      return navigate("/login");;
+    }
+  },[isLoggedIn])
 
   return (
     <div className="wrap_pageLogin">

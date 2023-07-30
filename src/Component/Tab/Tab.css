@@ -1,0 +1,22 @@
+.wrap-divTab{
+    display: flex;
+    justify-content: space-between;
+}
+.wrap-tab{
+    display: flex;
+    gap: 15px;
+}
+.btn-addTask{
+    padding: 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 5px;
+    max-width: max-content;
+
+}
+.wrap-Addtask{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}

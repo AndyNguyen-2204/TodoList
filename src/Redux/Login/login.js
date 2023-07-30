@@ -72,8 +72,10 @@ export const LoginSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.dataUser = action.payload; // Sử dụng action.payload.data vì action.payload có kiểu RegisterResponse
         state.loading = false;
-        state.login = true
         localStorage.setItem("accesstoken", action.payload.token)
+        if(localStorage.getItem("accesstoken")){
+          state.login = true
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
