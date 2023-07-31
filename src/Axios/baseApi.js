@@ -15,4 +15,4 @@ export const post = (url, data) => axiosInstance.post(url, data);
 export const put = (url, data) => axiosInstance.put(url, data);
 
 // Hàm DELETE để xóa dữ liệu khỏi API
-export const del = (url) => axiosInstance.delete(url);
+export const del = (url, params = {}) => axiosInstance.delete(url, { params });

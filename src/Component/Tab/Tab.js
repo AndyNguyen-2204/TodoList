@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./Tab.css"
-export default function Tab() {
+export default function Tab(props) {
     const Tab=[
         {
             name:"All Task"
@@ -15,7 +15,7 @@ export default function Tab() {
     const [show,setShow]=useState(false)
     const [tab,setTab]=useState(0)
     const handleAddTask = () =>{
-        
+        props.setShowModal(true)
     }
   return (
     <div className='wrap-divTab'>
@@ -26,10 +26,6 @@ export default function Tab() {
         </div>
         <div className='wrap-Addtask'>
             <button onClick={handleAddTask} className='btn-addTask'>Add Task</button>
-            <div className='wrap-input-add'>
-            <input/>
-            <input/>
-            </div>
         </div>
     </div>
   )

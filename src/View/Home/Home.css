@@ -1,6 +1,6 @@
 .wrap-homePage{
     position: relative;
-    height: 100vh;
+    min-height: calc(100vh - 150px);
     width: 100%;
     z-index: 10;
     padding-top: 150px;
