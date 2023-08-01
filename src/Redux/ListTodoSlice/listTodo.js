@@ -62,6 +62,30 @@ export const updateTask = createAsyncThunk(
     }
   }
 );
+export const getListNewTask = createAsyncThunk(
+  'listTodo/getListNewTask',
+  async ({ url }) => {
+    try {
+      const response = await get(url); // Thay đổi URL tùy theo API của bạn
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+      return error.response
+    }
+  }
+);
+export const getListCompleted = createAsyncThunk(
+  'listTodo/getListCompleted',
+  async ({ url }) => {
+    try {
+      const response = await get(url); // Thay đổi URL tùy theo API của bạn
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+      return error.response
+    }
+  }
+);
 // Tạo action creator bất đồng bộ để thực hiện cuộc gọi API và cập nhật state trong slice
 export const ListTodoSlice = createSlice({
   name: 'ListTodo',
@@ -129,6 +153,38 @@ export const ListTodoSlice = createSlice({
       })
       .addCase(updateTask.rejected, (state, action) => {
         state.loading = false
+        toast.error(action.error.message)
+        state.success = false
+      })
+      .addCase(getListNewTask.pending, (state) => {
+        state.loading = true
+        state.error = null
+        state.success = false
+      })
+      .addCase(getListNewTask.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+        state.success = false
+      })
+      .addCase(getListNewTask.rejected, (state, action) => {
+        state.loading = false
+        // state.error = action.error.message;
+        toast.error(action.error.message)
+        state.success = false
+      })
+      .addCase(getListCompleted.pending, (state) => {
+        state.loading = true
+        state.error = null
+        state.success = false
+      })
+      .addCase(getListCompleted.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+        state.success = false
+      })
+      .addCase(getListCompleted.rejected, (state, action) => {
+        state.loading = false
+        // state.error = action.error.message;
         toast.error(action.error.message)
         state.success = false
       })

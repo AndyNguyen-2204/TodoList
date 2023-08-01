@@ -3,11 +3,14 @@ import "./Modal.css"
 import { StatusTask } from "../RenderData/RenderData"
 import { useDispatch, useSelector } from 'react-redux'
 import { addNewTodo, updateTask } from '../../Redux/ListTodoSlice/listTodo'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment'
 export default function Modal(props) {
   const [value, setValue] = useState({
     title: "",
     description: "",
-    time: "",
+    time: new Date(),
     status: "Inprocess"
   })
   const dispatch = useDispatch()
@@ -35,38 +38,42 @@ export default function Modal(props) {
       ...value,
       userId: userId
     }
-   if(props.editModal){
-    dispatch(updateTask({ url: `/tasks/${props.dataChoose._id}`, data }))
-   }else{
-    dispatch(addNewTodo({ url: `/tasks/${userId}`, data }))
-   }
+    if (props.editModal) {
+      dispatch(updateTask({ url: `/tasks/${props.dataChoose._id}`, data }))
+    } else {
+      dispatch(addNewTodo({ url: `/tasks/${userId}`, data }))
+    }
   }
   useEffect(() => {
-    if (statusSubmit) {
+    if (!props.editModal) {
       setValue({
         title: "",
         description: "",
-        time: "",
-        status: ""
+        time: new Date(),
+        status: "Inprocess"
       })
-      props.setShowModal(false)
     }
-  }, [statusSubmit])
+  }, [props.editModal])
+  useEffect(() => {
+    if (props.dataChoose) {
+      setValue({
+        title: props.dataChoose.title,
+        description: props.dataChoose.description,
+        time: moment(props.dataChoose.time).toDate(),
+        status: props.dataChoose.status
+      })
+    }
+  }, [props.dataChoose])
   useEffect(()=>{
-      if(props.dataChoose){
-        setValue({
-          title:props.dataChoose.title,
-          description:props.dataChoose.description,
-          time:props.dataChoose.time,
-          status:props.dataChoose.status
-        })
-      }
-  },[props.dataChoose])
+     if(statusSubmit){
+      props.setShowModal(false)
+     }
+  },[statusSubmit])
   return (
     <div id="myModal" className="modal">
       <div className="modal-content">
         <div onClick={handleClose} className="close">&times;</div>
-        <h1>{props.editModal?"Edit task":"Add new task"}</h1>
+        <h1>{props.editModal ? "Edit task" : "Add new task"}</h1>
         <div className='modal-wrap-content'>
           <div className='items'>
             <span>Task Name</span>
@@ -78,7 +85,15 @@ export default function Modal(props) {
           </div>
           <div className='items'>
             <span>Execution Time </span>
-            <input onChange={onChangeInput} value={value.time} name="time" type="text" placeholder="Input 3" />
+            <DatePicker
+              selected={value.time}
+               minDate={(new Date())}
+               onChange={(date) => setValue({
+                ...value,
+                time:date
+               })}
+               dateFormat="dd/MM/yyyy"
+            />
           </div>
           <div className='items'>
             <span>Choose status task</span>

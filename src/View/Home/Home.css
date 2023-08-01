@@ -68,3 +68,17 @@
 .input-search input:focus{
     border: 2px solid tomato;
 }
+.wrap-logout{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    justify-content: center;
+}
+.wrap-logout span{
+    margin-left: 30px;
+}
+.wrap-logout svg:hover{
+    color: blueviolet;
+    cursor: pointer;
+}

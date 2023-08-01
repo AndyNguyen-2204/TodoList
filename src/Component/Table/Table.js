@@ -4,10 +4,11 @@ import { TableTilte } from "../RenderData/RenderData"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
 import DropDownEdit from '../DropDownEdit';
+import moment from 'moment';
 export default function Table(props) {
   return (
     <div>
-      <table className={props.dataTable.length===0 && "tableNulldata"}>
+      <table className={(props.dataTable && props.dataTable.length===0) && "tableNulldata"}>
         <thead>
           <tr>
             {TableTilte.map((el, index) =>
@@ -16,15 +17,15 @@ export default function Table(props) {
           </tr>
         </thead>
         <tbody>
-         {props.dataTable.length>0
+         {(props.dataTable && props.dataTable.length>0)
          ?
          props.dataTable.map((el,index)=>
          <tr>
           <td>{index+1}</td>
           <td>{el.title}</td>
           <td>{el.description}</td>
-          <td>{el.time}</td>
-          <td>{el.status}</td>
+          <td>{moment(el.time).format('DD/MM/YYYY')}</td>
+          <td className={el.status ==="Inprocess"?"Inprocess":"Completed" }>{el.status}</td>
           <td><DropDownEdit handleEdit={()=>props.handleEdit(el)} handleDelete={()=>props.handleDelete(el)}/></td>
          </tr>
          ):<span className='nullData'>

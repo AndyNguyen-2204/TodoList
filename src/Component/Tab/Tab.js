@@ -13,7 +13,6 @@ export default function Tab(props) {
         }
     ]
     const [show,setShow]=useState(false)
-    const [tab,setTab]=useState(0)
     const handleAddTask = () =>{
         props.setShowModal(true)
     }
@@ -21,7 +20,7 @@ export default function Tab(props) {
     <div className='wrap-divTab'>
         <div className='wrap-tab'>
         {Tab.map((el,index)=>
-            <span onClick={()=>setTab(index)} key={index} className={tab===index?"TabActive":""}>{el.name}</span>
+            <span onClick={()=>props.setTab(index)} key={index} className={props.tab===index?"TabActive":""}>{el.name}</span>
         )}
         </div>
         <div className='wrap-Addtask'>

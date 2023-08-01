@@ -115,3 +115,9 @@
 .modal-wrap-content .items:nth-child(2) {
   width: 100%;
 }
+.react-datepicker__input-container{
+  text-align: left;
+}
+.react-datepicker__input-container input {
+  min-width: 220px;
+}

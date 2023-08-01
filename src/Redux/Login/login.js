@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { post } from '../../Axios/baseApi'; // Import hàm post từ module api.js
+import { get, post } from '../../Axios/baseApi'; // Import hàm post từ module api.js
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -32,6 +32,18 @@ export const loginUser = createAsyncThunk(
   async ({ url, data }) => {
     try {
       const response = await post(url, data); // Thay đổi URL tùy theo API của bạn
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+      return error.response
+    }
+  }
+);
+export const logOutUser = createAsyncThunk(
+  'dataUser/logOutUser',
+  async (url) => {
+    try {
+      const response = await get(url); // Thay đổi URL tùy theo API của bạn
       return response.data;
     } catch (error) {
       throw new Error(error.response.data);
@@ -80,6 +92,20 @@ export const LoginSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.login = false
+        // state.error = action.error.message;
+        toast.error(action.error.message)
+      })
+      .addCase(logOutUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logOutUser.fulfilled, (state, action) => {
+        state.loading = false;
+        localStorage.clear()
+        state.login = false
+        state.dataUser = null
+      })
+      .addCase(logOutUser.rejected, (state, action) => {
+        state.loading = false;
         // state.error = action.error.message;
         toast.error(action.error.message);
       });

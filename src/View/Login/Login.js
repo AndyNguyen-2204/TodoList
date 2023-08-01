@@ -45,7 +45,7 @@ function Login(){
       return navigate("/home");
     } else {
       // Navigate to login page or handle not logged in state
-      return navigate("/login");;
+      return navigate("/login");
     }
   },[isLoggedIn])
 
