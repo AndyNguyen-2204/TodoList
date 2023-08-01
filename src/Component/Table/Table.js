@@ -7,7 +7,7 @@ import DropDownEdit from '../DropDownEdit';
 import moment from 'moment';
 export default function Table(props) {
   return (
-    <div>
+    <div className='wrap-table'>
       <table className={(props.dataTable && props.dataTable.length===0) && "tableNulldata"}>
         <thead>
           <tr>

@@ -32,6 +32,15 @@
     flex-direction: column;
     align-items: end;
 }
+@media (max-width:450px) {
+    .wrap-divTab{
+        flex-direction: column;
+        gap:10px;
+    }
+    .wrap-Addtask{
+        align-items: flex-start;
+    }
+}
 .wrap-input-add{
     display: flex;
     gap: 10px;
