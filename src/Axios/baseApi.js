@@ -16,3 +16,12 @@ export const put = (url, data) => axiosInstance.put(url, data);
 
 // Hàm DELETE để xóa dữ liệu khỏi API
 export const del = (url, params = {}) => axiosInstance.delete(url, { params });
+
+//Hàm POST để gửi FormData lên API
+export const postFormData = (url, data) => {
+  return axiosInstance.post(url, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data' // Đặt header 'Content-Type' là 'multipart/form-data' 
+    }
+  });
+};

@@ -10,14 +10,18 @@ import ModalConfirm from '../../Component/ModalConfirm/ModalConfirm';
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { logOutUser } from '../../Redux/Login/login';
 import { useNavigate } from 'react-router';
+import ModalUpload from '../../Component/ModalUpload/ModalUpload';
 export default function Home() {
   const dataUser = useSelector((state) => state.Login.dataUser);
   const dataTable = useSelector((state) => state.TodoList.data)
   const [showModal, setShowModal] = useState(false)
   const [showModalConfirm, setShowModalConfirm] = useState(false)
+  const [showModalUpload,setShowModalUpload]=useState(false)
   const statusSubmit = useSelector((state) => state.TodoList.success)
   const [dataChoose, setDataChoose] = useState(null)
   const [editModal, setEditModal] = useState(false)
+  const [file, setFile] = useState(null);
+  const [formData,setFormData]=useState(null)
   const [tab, setTab] = useState(0)
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -71,6 +75,9 @@ export default function Home() {
   const handleLogout = () => {
     dispatch(logOutUser("/logout"))
   }
+  const handleCloseUpload=()=>{
+    setShowModalUpload(false)
+  }
   useEffect(() => {
     if (!isLoggedIn) {
       return navigate("/login");
@@ -82,7 +89,7 @@ export default function Home() {
         <div className='wrap-content-inner container'>
           <div>
             <div className='avatar-user'>
-              <img alt='' src='https://play-lh.googleusercontent.com/ZyWNGIfzUyoajtFcD7NhMksHEZh37f-MkHVGr5Yfefa-IX7yj9SMfI82Z7a2wpdKCA' />
+              <img onClick={()=>setShowModalUpload(true)} alt='' src='https://play-lh.googleusercontent.com/ZyWNGIfzUyoajtFcD7NhMksHEZh37f-MkHVGr5Yfefa-IX7yj9SMfI82Z7a2wpdKCA' />
               <span>{dataUser ? dataUser.user.username : ""}</span>
             </div>
             <div className='wrap-logout'>
@@ -100,6 +107,7 @@ export default function Home() {
       </div>
       {showModal && <Modal dataChoose={dataChoose} setShowModal={setShowModal} editModal={editModal} setDataChoose={setDataChoose} />}
       {showModalConfirm && <ModalConfirm handleClose={handleClose} handleSubmit={handleSubmit} />}
+      {showModalUpload && <ModalUpload handleCloseUpload={handleCloseUpload}/>}
     </div>
   )
 }

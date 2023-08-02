@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { get, post } from '../../Axios/baseApi'; // Import hàm post từ module api.js
+import { get, post, postFormData } from '../../Axios/baseApi'; // Import hàm post từ module api.js
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -48,6 +48,17 @@ export const logOutUser = createAsyncThunk(
     } catch (error) {
       throw new Error(error.response.data);
       return error.response
+    }
+  }
+);
+export const uploadAvatar = createAsyncThunk(
+  'dataUser/uploadAvatar',
+  async (data, thunkAPI) => { // Không cần truyền tham số url vào, vì đã được định nghĩa trong axiosInstance
+    try {
+      const response = await postFormData('/upload', data); // Gọi API upload với endpoint '/upload'
+      return response.data; // Trả về dữ liệu từ backend (link avatar đã được upload)
+    } catch (error) {
+      throw new Error(error.response.data); // Nếu có lỗi, throw một lỗi mới để xử lý
     }
   }
 );
@@ -105,6 +116,18 @@ export const LoginSlice = createSlice({
         state.dataUser = null
       })
       .addCase(logOutUser.rejected, (state, action) => {
+        state.loading = false;
+        // state.error = action.error.message;
+        toast.error(action.error.message);
+      })
+      .addCase(uploadAvatar.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.loading = false;
+
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
         state.loading = false;
         // state.error = action.error.message;
         toast.error(action.error.message);
