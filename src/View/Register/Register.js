@@ -13,7 +13,7 @@ function Register() {
   const navigate = useNavigate();
   const success = useSelector((state) => state.Login.success)
 
-  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e) => {
     // Lấy tên trường nhập liệu (username hoặc password)
     const fieldName = e.target.name;
 
@@ -31,7 +31,8 @@ function Register() {
     // Thực hiện xử lý đăng nhập ở đây
     const data = {
       username: value.username,
-      password: value.password
+      password: value.password,
+      avatar:""
     };
     dispatch(registerUser({ url: '/register', data }));
   };

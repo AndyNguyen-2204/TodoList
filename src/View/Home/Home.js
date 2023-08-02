@@ -11,6 +11,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { logOutUser } from '../../Redux/Login/login';
 import { useNavigate } from 'react-router';
 import ModalUpload from '../../Component/ModalUpload/ModalUpload';
+import AvatarDefault from "../../assest/images/avatar.jpg"
 export default function Home() {
   const dataUser = useSelector((state) => state.Login.dataUser);
   const dataTable = useSelector((state) => state.TodoList.data)
@@ -89,7 +90,7 @@ export default function Home() {
         <div className='wrap-content-inner container'>
           <div>
             <div className='avatar-user'>
-              <img onClick={()=>setShowModalUpload(true)} alt='' src='https://play-lh.googleusercontent.com/ZyWNGIfzUyoajtFcD7NhMksHEZh37f-MkHVGr5Yfefa-IX7yj9SMfI82Z7a2wpdKCA' />
+              <img onClick={()=>setShowModalUpload(true)} alt='' src={dataUser.user.avatar===""?AvatarDefault:dataUser.user.avatar} />
               <span>{dataUser ? dataUser.user.username : ""}</span>
             </div>
             <div className='wrap-logout'>
