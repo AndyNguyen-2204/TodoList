@@ -80,19 +80,15 @@ export default function Home() {
     <div className='wrap-homePage'>
       <div className='background-homePage'>
         <div className='wrap-content-inner container'>
-          <div className='input-search'>
-            <span>Tasks</span>
-            <input />
-          </div>
           <div>
             <div className='avatar-user'>
               <img alt='' src='https://play-lh.googleusercontent.com/ZyWNGIfzUyoajtFcD7NhMksHEZh37f-MkHVGr5Yfefa-IX7yj9SMfI82Z7a2wpdKCA' />
               <span>{dataUser ? dataUser.user.username : ""}</span>
-              <div className='wrap-logout'>
+            </div>
+            <div className='wrap-logout'>
                 <span>Logout</span>
                 <p onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></p>
               </div>
-            </div>
           </div>
         </div>
       </div>

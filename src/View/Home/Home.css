@@ -27,13 +27,17 @@
 .wrap-content-inner{
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: none;
     margin: auto;
     padding-top: 30px;
     box-sizing: border-box;
     padding: 30px 16px 0 16px;
+}
+.wrap-content-inner >div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 @media (max-width:768px) {
     .wrap-content-inner{
