@@ -10,7 +10,8 @@ const initialState = {
   error: null,
   message: null,
   success: null,
-  login: false
+  login: false,
+  update: false
 };
 
 // Tạo action creator bất đồng bộ để thực hiện cuộc gọi API và cập nhật state trong slice
@@ -53,12 +54,24 @@ export const logOutUser = createAsyncThunk(
 );
 export const uploadAvatar = createAsyncThunk(
   'dataUser/uploadAvatar',
-  async (data, thunkAPI) => { // Không cần truyền tham số url vào, vì đã được định nghĩa trong axiosInstance
+  async (data, thunkAPI) => {
     try {
-      const response = await postFormData('/upload', data); // Gọi API upload với endpoint '/upload'
-      return response.data; // Trả về dữ liệu từ backend (link avatar đã được upload)
+      const response = await postFormData('/upload', data);
+      return response.data
     } catch (error) {
-      throw new Error(error.response.data); // Nếu có lỗi, throw một lỗi mới để xử lý
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getUser = createAsyncThunk(
+  'dataUser/getUser',
+  async (url) => {
+    try {
+      const response = await get(url); // Thay đổi URL tùy theo API của bạn
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data);
+      return error.response
     }
   }
 );
@@ -93,10 +106,10 @@ export const LoginSlice = createSlice({
         state.login = false
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.dataUser = action.payload; // Sử dụng action.payload.data vì action.payload có kiểu RegisterResponse
+        state.dataUser = action.payload.user; // Sử dụng action.payload.data vì action.payload có kiểu RegisterResponse
         state.loading = false;
         localStorage.setItem("accesstoken", action.payload.token)
-        if(localStorage.getItem("accesstoken")){
+        if (localStorage.getItem("accesstoken")) {
           state.login = true
         }
       })
@@ -125,13 +138,29 @@ export const LoginSlice = createSlice({
       })
       .addCase(uploadAvatar.fulfilled, (state, action) => {
         state.loading = false;
+        state.update = true
+        toast.success("Tải ảnh lên thành công!")
 
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
         state.loading = false;
         // state.error = action.error.message;
+        toast.error(action.payload);
+      })
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.dataUser = action.payload; // Sử dụng action.payload.data vì action.payload có kiểu RegisterResponse
+        state.loading = false;
+        state.update = false
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        // state.error = action.error.message;
         toast.error(action.error.message);
-      });
+        state.loading = false;
+        state.update = false
+      })
   },
 });
 

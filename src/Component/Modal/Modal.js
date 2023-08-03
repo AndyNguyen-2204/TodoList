@@ -14,7 +14,7 @@ export default function Modal(props) {
     status: "Inprocess"
   })
   const dispatch = useDispatch()
-  const userId = useSelector((state) => state.Login.dataUser.user._id)
+  const userId = useSelector((state) => state.Login.dataUser._id)
   const statusSubmit = useSelector((state) => state.TodoList.success)
   const handleClose = () => {
     props.setShowModal(false)

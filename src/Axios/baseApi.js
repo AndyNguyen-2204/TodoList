@@ -18,10 +18,8 @@ export const put = (url, data) => axiosInstance.put(url, data);
 export const del = (url, params = {}) => axiosInstance.delete(url, { params });
 
 //Hàm POST để gửi FormData lên API
-export const postFormData = (url, data) => {
-  return axiosInstance.post(url, data, {
+export const postFormData = (url, data) => axiosInstance.post(url, data, {
     headers: {
       'Content-Type': 'multipart/form-data' // Đặt header 'Content-Type' là 'multipart/form-data' 
     }
   });
-};
