@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://localhost:8000/api';
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 5000, // Thời gian tối đa để chờ cuộc gọi API (5 giây trong ví dụ này)
